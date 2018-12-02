@@ -1,28 +1,43 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-toolbar app>
+      <v-toolbar-title class="headline">
+        <span>MBTD:</span>
+        <span class="font-weight-light">MicroBio Tower Defense</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn
+        flat
+        @click="startLogin"
+      >
+        Login
+      </v-btn>
+    </v-toolbar>
+
+    <v-content>
+      <router-view/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+//import MainPage from './components/MainPage'
+//import Login from './components/Login'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    HelloWorld
+    //MainPage,
+  },
+  data () {
+    return {
+      //
+    }
+  },
+  methods: {
+    startLogin () {
+      this.$router.push({path: "/Login"})
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
