@@ -11,6 +11,10 @@
         <v-flex xs4>
             <v-btn color="success" @click="login">Login</v-btn>
         </v-flex>
+        <v-flex xs4>
+            <span> Haven't linked an account? <router-link to="/Register">Link</router-link></span>
+        </v-flex>
+        
     </v-layout>
 </v-container>
 
@@ -23,7 +27,7 @@
         data: function() {
             return {
                 userName: null,
-                password: null
+                password: null,
             }
         },
         
@@ -31,6 +35,7 @@
             login() {
                 //this.$router.push({path: '/'});
                 //this.$store.commit('SET_LOGIN_PROGRESS', true);
+                
                 this.$store.dispatch('authenticate', {
                     userName: this.userName,
                     password: this.password
