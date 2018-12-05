@@ -1,23 +1,25 @@
 <template>
-<v-container fluid>
-    <h2>High Scores</h2>
-    <v-layout column>
-      
-      <table>
-        <tr>
-          <th>Rank</th><th>User</th><th>Score</th>
-        </tr>
-        <template v-for="score in this.scores">
-        <tr>
-          <td> 0 </td>
-          <td> {{ score.userName }} </td>
-          <td> {{ score.score }} </td>
-        </tr>
-        </template>
-      </table>
+    <v-container fluid>
+        <h2>High Scores</h2>
+        <v-layout column>
+          
+          <table>
+            <tr class="header">
+              <th>Rank</th><th>User</th><th>Score</th>
+            </tr>
+            <template v-for="score in this.scores">
+            <tr class="rows">
+              <v-flex> 
+              <td> 0 </td>
+              <td> {{ score.userName }} </td>
+              <td> {{ score.score }} </td>
+              </v-flex>
+            </tr>
+            </template>
+          </table>
 
-    </v-layout>
-</v-container>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
