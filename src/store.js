@@ -66,8 +66,8 @@ export default new Vuex.Store({
         console.log(snapshot.toJSON());
       });
     },
-    DELETESCORE(state){
-    
+    DELETE_SCORE(state, key){
+    	state.scoresRef.child(key).remove();
     },
   },
   actions: {
@@ -94,8 +94,8 @@ export default new Vuex.Store({
     addScore({commit}, score) {
       commit('INSERT_SCORE', score);
     },
-    deleteScore({commit}, score){
-    	commit('INSERT_SCORE', score);	
+    deleteScore({commit}, key){
+    	commit('DELETE_SCORE',key);
     },
    },
   computed: mapState({
