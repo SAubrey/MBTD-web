@@ -48,16 +48,21 @@ export default new Vuex.Store({
       state.userID = null;
     },
     INSERT_SCORE(state, score) {
-      state.db.ref('scores/' + state.userID).push({
+      //state.db.ref('scores/' + state.userID).push({
+      state.scoresRef.push().set({
         score: score,
-        userName: state.userName
+        userName: state.userName,
+        uid: state.userID
       });
     },
 
     CREATE_LISTENERS(state) {
       console.log("HEYYYYY");
       state.scoresRef.on("value", snapshot => {
+        //state.scoresRef.sort
         state.scores = snapshot.toJSON();
+        //state.scores 
+
         console.log(snapshot.toJSON());
       });
     },

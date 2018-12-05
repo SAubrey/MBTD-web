@@ -7,8 +7,7 @@
         <tr class="header">
           <th>Rank</th><th>User</th><th>Score</th><th>Delete</th>
         </tr>
-        <template v-for="user in this.scores">
-          <template v-for="score in user">
+        <template v-for="score in this.scores">
         <tr class="rows">
           <td> {{ index }} </td>
           <td> {{ score.userName }} </td>
@@ -17,7 +16,6 @@
             <v-btn color="red" @click="deleteScore">Delete</v-btn>
         </v-flex></td>
         </tr>
-        </template>
         </template>
       </table>
 
@@ -33,6 +31,7 @@ import { mapActions, mapState } from 'vuex';
   data: function() {
     return {
       i: 0
+
     }
   },    
 
@@ -41,7 +40,7 @@ import { mapActions, mapState } from 'vuex';
     },
 
     methods: {
-      ...mapActions(['createListeners']),
+      ...mapActions(['createListeners', 'delete']),
       iterate() {
        this.i += 1;
         return this.i;
