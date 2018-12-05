@@ -5,14 +5,21 @@
       
       <table>
         <tr>
-          <th>Rank</th><th>User</th><th>Score</th>
+          <td>Rank</td>
+		  <td>User</td>
+		  <td>Score</td>
+        </tr>
+		 <tr>
+          <td>---------</td>
+		  <td>---------</td>
+		  <td>---------</td>
         </tr>
         <template v-for="score in this.scores">
-        <tr>
-          <td> 0 </td>
-          <td> {{ score.userName }} </td>
-          <td> {{ score.score }} </td>
-        </tr>
+			<tr>
+			  <td> 0 </td>
+			  <td> {{ score.userName }} </td>
+			  <td> {{ score.score }} </td>
+			</tr>
         </template>
       </table>
 
@@ -22,24 +29,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-
-/*
-  // What I had for v-data-table...
-<v-data-table
-          :items="this.scores"
-          item-key="userName"
-      >
-          <template slot="headers" slot-scope="props">
-            <th> Rank </th>
-            <th> User </th>
-            <th> Score </th>
-            
-          </template>
-          <template slot="items" slot-scope="">
-
-          </template>
-        </v-data-table>
-*/
 
  export default {
   name: 'mainTable',

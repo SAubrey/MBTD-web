@@ -21,7 +21,6 @@ export default new Vuex.Store({
     userID: null,
     userName: null,
     loggedIn: false,
-    //profile: [],
     ui: new firebaseui.auth.AuthUI(firebase.auth()),
     db: firebase.database(),
     leaderboardObj: null,
@@ -33,8 +32,7 @@ export default new Vuex.Store({
     LOGIN(state, profile) {
       state.loggedIn = true;
       state.userName = profile.displayName;
-      state.userID = profile.uid;
-      //state.profile = profile;
+      state.userID = profile.uid;	
 
       // Add user to firebase
       state.db.ref('users/' + profile.uid).set({
@@ -56,7 +54,10 @@ export default new Vuex.Store({
 
     CREATE_LISTENERS(state) {
       state.scoresRef.on("child_added", snapshot => {
-        state.scores = snapshot.toJSON;
+        state.scores = snapshot.toJSON();
+      }),
+	  state.scoresRef.on("child_removed", snapshot => {
+        state.scores = snapshot.toJSON();
       });
     },
   },
