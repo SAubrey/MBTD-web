@@ -44,9 +44,10 @@ export default {
 
   methods: {
     ...mapActions(['login', 'logout']),
+
     goToAccount() {
       this.$router.push({path: '/Account'});
-    }
+    },
   }
 }
 </script>
