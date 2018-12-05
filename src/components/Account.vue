@@ -47,12 +47,13 @@ import { mapState, mapActions } from 'vuex';
             add() {
                 if (this.validateInput()) {
                     this.addScore(this.score);
+					this.score = 0;
                 }
             },
 
             validateInput() {
-                if (this.score < 1 || this.score > 10000) {
-                    alert("Oops! Score must be 1 - 10,000");
+                if (this.score < 1 || this.score > 10000 || !(/^-?[\d.]+(?:e-?\d+)?$/.test(this.score))) {//https://stackoverflow.com/questions/1303646/check-whether-variable-is-number-or-string-in-javascript
+                    alert("Oops! Score must be a number between 1 - 10,000");
                     return false;
                 } else {
                     return true;
