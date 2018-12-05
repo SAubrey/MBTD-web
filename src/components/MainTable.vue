@@ -4,12 +4,12 @@
     <v-layout column>
       
       <table id="mainTable">
-        <tr>
+        <tr class="header">
           <th>Rank</th><th>User</th><th>Score</th>
         </tr>
         <template v-for="user in this.scores">
           <template v-for="score in user">
-        <tr>
+        <tr class="rows">
           
           <td> {{ i }} </td>
           <td> {{ score.userName }} </td>
@@ -19,8 +19,8 @@
         </template>
       </table>
 
-    </v-layout>
-</v-container>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
