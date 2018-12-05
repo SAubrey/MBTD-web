@@ -55,8 +55,10 @@ export default new Vuex.Store({
     },
 
     CREATE_LISTENERS(state) {
-      state.scoresRef.on("child_added", snapshot => {
-        state.scores = snapshot.toJSON;
+      //console.log("HEYYYYY");
+      state.scoresRef.on("value", snapshot => {
+        state.scores = snapshot.toJSON();
+        console.log(snapshot.toJSON());
       });
     },
   },

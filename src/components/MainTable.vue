@@ -3,16 +3,19 @@
     <h2>High Scores</h2>
     <v-layout column>
       
-      <table>
+      <table id="mainTable">
         <tr>
           <th>Rank</th><th>User</th><th>Score</th>
         </tr>
-        <template v-for="score in this.scores">
+        <template v-for="user in this.scores">
+          <template v-for="score in user">
         <tr>
-          <td> 0 </td>
+          
+          <td> {{ i }} </td>
           <td> {{ score.userName }} </td>
           <td> {{ score.score }} </td>
         </tr>
+        </template>
         </template>
       </table>
 
@@ -23,46 +26,11 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 
-/*
-  // What I had for v-data-table...
-<v-data-table
-          :items="this.scores"
-          item-key="userName"
-      >
-          <template slot="headers" slot-scope="props">
-            <th> Rank </th>
-            <th> User </th>
-            <th> Score </th>
-            
-          </template>
-          <template slot="items" slot-scope="">
-
-          </template>
-        </v-data-table>
-*/
-
  export default {
   name: 'mainTable',
   data: function() {
     return {
-      pagination: {
-      sortBy: 'score'
-    },
-
-    selected: [],
-
-    headers: [
-      {
-        text: 'string',
-        align: 'left',
-        value: 'string'
-      },
-      { text: 'Rank', value: 'userName' },
-      { text: 'User', value: 'userName' },
-      { text: 'Score', value: 'score' },
-    ],
-
-    //theseScores: this.scores
+      i: 0
     }
   },    
 
@@ -72,9 +40,20 @@ import { mapActions, mapState } from 'vuex';
 
     methods: {
       ...mapActions(['createListeners']),
+      iterate() {
+       this.i += 1;
+        return this.i;
+      },
+      
     },
     beforeMount() { // Called immediately
       this.createListeners();
+    },
+
+    getters: {
+
     }
+
+   
 }
 </script>
