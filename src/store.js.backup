@@ -61,9 +61,6 @@ export default new Vuex.Store({
         console.log(snapshot.toJSON());
       });
     },
-    DELETESCORE(state){
-    
-    },
   },
   actions: {
     async login({commit}) {
@@ -90,7 +87,7 @@ export default new Vuex.Store({
       commit('INSERT_SCORE', score);
     },
     deleteScore({commit}, score){
-    	commit('INSERT_SCORE', score);	
+    	commit('INSERT_SCORE', score);
     },
    },
   computed: mapState({
