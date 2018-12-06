@@ -24,7 +24,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-
     export default {
         name: 'Account',
         data: function() {
@@ -32,25 +31,20 @@ import { mapState, mapActions } from 'vuex';
                 score: 0,
             }
         },
-
         computed: {
             ...mapState(['scores'])
         },
-
         methods: {
             ...mapActions(['addScore']),
-
             goHome() {
                 this.$router.push({path: '/'})
             },
-
             add() {
                 if (this.validateInput()) {
                     this.addScore(this.score);
 					this.score = 0;
                 }
             },
-
             validateInput() {
                 if (this.score < 1 || this.score > 10000 || !(/^-?[\d.]+(?:e-?\d+)?$/.test(this.score))) {//https://stackoverflow.com/questions/1303646/check-whether-variable-is-number-or-string-in-javascript
                     alert("Oops! Score must be a number between 1 - 10,000");

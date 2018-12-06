@@ -26,25 +26,20 @@
 <script>
 import { mapState } from 'vuex';
 import { mapActions } from 'vuex';
-
 export default {
   name: 'App',
   components: {
   },
-
   data () {
     return {
       //
     }
   },
-
   computed: {
       ...mapState(['loggedIn', 'userName'])
   },
-
   methods: {
     ...mapActions(['login', 'logout']),
-
     goToAccount() {
       this.$router.push({path: '/Account'});
     },
