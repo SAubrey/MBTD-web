@@ -15,20 +15,20 @@ const config = {
 };
 firebase.initializeApp(config);
 
+
 export default new Vuex.Store({
   state: {
-    userID: '',
+    userID: null,
     userName: null,
     loggedIn: false,
+    //profile: [],
     ui: new firebaseui.auth.AuthUI(firebase.auth()),
     db: firebase.database(),
     leaderboardObj: null,
     usersRef: firebase.database().ref().child("users"),
     scoresRef: firebase.database().ref().child("scores"),
-    scores: null,
-    users: null,
+    scores: firebase.database().ref(),
   },
-
   mutations: {
     LOGIN(state, profile) {
       state.loggedIn = true;
@@ -42,62 +42,40 @@ export default new Vuex.Store({
         uid: profile.uid
       });
     },
-
     LOGOUT(state) {
       state.loggedIn = false;
       state.userName = null;
-      state.userID = '';
+      state.userID = null;
     },
-
     INSERT_SCORE(state, score) {
-      var currentScore = 0;
-      //console.log(state.scoresRef.child(state.userID).);
-      state.scoresRef.child(state.userID).once('value', function(snapshot) {
-        
-          console.log(snapshot.val());
-        // If a score already exists:
-        if (snapshot.val() != null) {
-          currentScore = snapshot.val();
-
-          if (parseInt(currentScore) < score) {
-            state.db.ref('scores/' + state.userID).set(score);
-              /*
-              state.scoresRef.child(state.userID).set({
-                score: score,
-              });
-            */
-          }
-        } else {
-          //state.db.ref('scores/' + state.userID).set({
-            //var s = state.userID.toString();
-            state.db.ref('scores/' + state.userID).set(score);
-            //score: score,
-          //});
-        }
+      //state.db.ref('scores/' + state.userID).push({
+      state.scoresRef.push().set({
+        score: score,
+        userName: state.userName,
+        uid: state.userID
       });
     },
 
     CREATE_LISTENERS(state) {
       console.log("HEYYYYY");
-      state.scoresRef.orderByValue().on("value", snapshot => {
+      state.scoresRef.on("value", snapshot => {
+        //state.scoresRef.sort
         state.scores = snapshot.toJSON();
+        //state.scores 
+
+        console.log(snapshot.toJSON());
       });
-
-      state.usersRef.on("value", snapshot => {
-        state.users = snapshot.toJSON();
-      })
     },
-
-    DELETE_SCORE(state, key){
+    DELETE_SCORE(state){
     	state.scoresRef.child(key).remove();
     },
   },
-
   actions: {
     async login({commit}) {
       const provider = new firebase.auth.GoogleAuthProvider();
       try {
         const result = await firebase.auth().signInWithPopup(provider);
+        //console.log(result);
         commit('LOGIN', result.user);
       } catch (error) {
         console.log(error);
@@ -116,18 +94,14 @@ export default new Vuex.Store({
     addScore({commit}, score) {
       commit('INSERT_SCORE', score);
     },
-
     deleteScore({commit}, key){
-    	commit('DELETE_SCORE', key);
+    	commit('DELETE_SCORE',key);
     },
    },
-
   computed: mapState({
     loggedIn: state => state.loggedIn,
     userName: state => state.userName,
-    userID: state => state.userID,
     scores: state => state.scores,
-    users: state => state.users,
   }),
 
 })

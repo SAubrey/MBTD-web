@@ -1,22 +1,26 @@
 <template>
-    <v-container fluid>
-        <h2>High Scores</h2>
-        <v-layout column>
-          
-          <table>
-            <tr class="header">
-              <th>Rank</th><th>User</th><th>Score</th>
-            </tr>
-            <template v-for="score in this.scores">
-            <tr class="rows">
-              <v-flex> 
-              <td> 0 </td>
-              <td> {{ score.userName }} </td>
-              <td> {{ score.score }} </td>
-              </v-flex>
-            </tr>
-            </template>
-          </table>
+<v-container fluid>
+    <h2 class="centered">High Scores</h2>
+    <v-layout column>
+
+      <table id="mainTable">
+        <tr class="header">
+          <th>Rank</th><th>User</th><th>Score</th><th>Delete</th>
+        </tr>
+        <template v-for="(score, key) in this.scores">
+        <tr class="rows">
+          <td> {{ i }} </td>
+          <td> {{ key }} </td>
+          <td> {{ score }} </td>
+	        <td><v-flex xs4>
+            <v-btn v-if="userID.toString() == key.toString()" color="red" @click="deleteScore(key)">
+              Delete
+            </v-btn>
+            <p v-else></p>
+          </v-flex></td>
+        </tr>
+        </template>
+      </table>
 
         </v-layout>
     </v-container>
@@ -24,51 +28,52 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-/*
-  // What I had for v-data-table...
-<v-data-table
-          :items="this.scores"
-          item-key="userName"
-      >
-          <template slot="headers" slot-scope="props">
-            <th> Rank </th>
-            <th> User </th>
-            <th> Score </th>
-            
-          </template>
-          <template slot="items" slot-scope="">
-          </template>
-        </v-data-table>
-*/
  export default {
   name: 'mainTable',
   data: function() {
     return {
-      pagination: {
-      sortBy: 'score'
-    },
-    selected: [],
-    headers: [
-      {
-        text: 'string',
-        align: 'left',
-        value: 'string'
-      },
-      { text: 'Rank', value: 'userName' },
-      { text: 'User', value: 'userName' },
-      { text: 'Score', value: 'score' },
-    ],
-    //theseScores: this.scores
+      i: 0
     }
   },    
     computed: {
-      ...mapState(['scores']),
+      ...mapState(['scores', 'users', 'userID']),
     },
     methods: {
-      ...mapActions(['createListeners']),
+      ...mapActions(['createListeners', 'deleteScore']),    
+        order() {
+          /*
+          var arr = [];
+         // var unsArr = [];
+         //console.log()
+          for (score in this.scores) {
+            console.log(score);
+            arr.push(score.val());
+          }
+
+          // Selection Sort
+          arr[0] = 0;
+          var n = this.scores.length;
+          var i = 0;
+            for (var i = 0; i < n - 1; i++) {
+
+              var minIndex = i;
+              for (var j = i + 1; j < n; j++) {
+                if (arr[j] > arr[minIndex]) {
+                  minIndex = j;
+                }
+              }
+
+              var t = arr[minIndex];
+              arr[minIndex] = arr[i];
+              arr[i] = t;
+          }
+          return arr;
+          */
+        }
     },
+
     beforeMount() { // Called immediately
       this.createListeners();
-    }
+    },
 }
 </script>

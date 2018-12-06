@@ -1,6 +1,6 @@
 <template>
 <v-container fluid>
-    <h2>Account</h2>
+    <h2 class="centered">Account</h2>
     <v-layout column>
         <h3>Add a run</h3>
         <v-flex>
@@ -11,11 +11,9 @@
         </v-flex>
 
         <v-spacer></v-spacer>       
+        
         <v-flex xs4>
-            <h3>Your accumulated run data</h3>
-        </v-flex>
-        <v-flex xs4>
-            <v-btn @click="goHome"> Return</v-btn>
+            <v-btn class="centered" @click="goHome"> Return</v-btn>
         </v-flex>
     </v-layout>
 </v-container>
@@ -32,12 +30,12 @@ import { mapState, mapActions } from 'vuex';
             }
         },
         computed: {
-            ...mapState(['scores'])
+            ...mapState(['scores', 'userID'])
         },
         methods: {
             ...mapActions(['addScore']),
             goHome() {
-                this.$router.push({path: '/'})
+                this.$router.push({path: '/'});
             },
             add() {
                 if (this.validateInput()) {
@@ -46,14 +44,24 @@ import { mapState, mapActions } from 'vuex';
                 }
             },
             validateInput() {
-                if (this.score < 1 || this.score > 10000 || !(/^-?[\d.]+(?:e-?\d+)?$/.test(this.score))) {//https://stackoverflow.com/questions/1303646/check-whether-variable-is-number-or-string-in-javascript
+                //https://stackoverflow.com/questions/1303646/check-whether-variable-is-number-or-string-in-javascript
+                if (this.score < 1 || this.score > 10000 || !(/^-?[\d.]+(?:e-?\d+)?$/.test(this.score))) {
                     alert("Oops! Score must be a number between 1 - 10,000");
                     return false;
                 } else {
                     return true;
                 }
+            },
+
+            checkLoggedOut() {
+            if (this.userID == null) {
+                this.goHome();
             }
-            
+            }
+        },
+
+        updated() {
+            this.checkLoggedOut();
         }
     };
 </script>

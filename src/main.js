@@ -21,7 +21,7 @@ export const appRouter = new VueRouter({
   routes: appRoutes
 });
 
-const app = new Vue({
+new Vue({
   store,
   router: appRouter,
   render: h => h(App)
