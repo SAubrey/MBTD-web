@@ -2,6 +2,13 @@
 <v-container fluid>
     <h2 class="centered">Account</h2>
     <v-layout column>
+		<h3>Change username</h3>
+		<v-flex>
+            <v-text-field label="New Username" v-model="newName"></v-text-field>
+        </v-flex>
+		<v-flex>
+            <v-btn @click='rename'>Rename</v-btn>
+        </v-flex>
         <h3>Add a run</h3>
         <v-flex>
             <v-text-field label="Score" v-model="score"></v-text-field>
@@ -27,13 +34,14 @@ import { mapState, mapActions } from 'vuex';
         data: function() {
             return {
                 score: 0,
+				newName: "",
             }
         },
         computed: {
             ...mapState(['scores', 'userID'])
         },
         methods: {
-            ...mapActions(['addScore']),
+            ...mapActions(['addScore','renameUser']),
             goHome() {
                 this.$router.push({path: '/'});
             },
@@ -42,6 +50,11 @@ import { mapState, mapActions } from 'vuex';
                     this.addScore(this.score);
 					this.score = 0;
                 }
+            },
+			rename() {
+				this.renameUser(this.newName);
+				this.newName = "";
+				console.log("YEE");
             },
             validateInput() {
                 //https://stackoverflow.com/questions/1303646/check-whether-variable-is-number-or-string-in-javascript

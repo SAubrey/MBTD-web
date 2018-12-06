@@ -10,7 +10,7 @@
         <template v-for="(score, key) in this.scores">
         <tr class="rows">
           <td> {{ i }} </td>
-          <td> {{ key }} </td>
+          <td> {{ users[key].userName }} </td>
           <td> {{ score }} </td>
 	        <td><v-flex xs4>
             <v-btn v-if="userID.toString() == key.toString()" color="red" @click="deleteScore(key)">

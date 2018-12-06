@@ -91,6 +91,9 @@ export default new Vuex.Store({
     DELETE_SCORE(state, key){
     	state.scoresRef.child(key).remove();
     },
+	RENAME_USER(state, name){
+    	state.usersRef.child(state.userID).child("userName").set(name);
+    },
   },
 
   actions: {
@@ -119,6 +122,10 @@ export default new Vuex.Store({
 
     deleteScore({commit}, key){
     	commit('DELETE_SCORE', key);
+    },
+	
+	renameUser({commit}, name){
+    	commit('RENAME_USER', name);
     },
    },
 
