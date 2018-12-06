@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
       <v-btn v-if="this.loggedIn" @click="goToAccount">{{this.userName}}</v-btn>
 
-    <v-btn v-if="this.loggedIn" @click="this.logout">Logout</v-btn>
+    <v-btn v-if="this.loggedIn" @click="log_out">Logout</v-btn>
     <v-btn
       class="mr-5"
       v-else
@@ -18,7 +18,9 @@
     </v-toolbar>
 
     <v-content>
+      <transition name="moveInUp">
       <router-view/>
+      </transition>
     </v-content>
   </v-app>
 </template>
@@ -48,6 +50,16 @@ export default {
     goToAccount() {
       this.$router.push({path: '/Account'});
     },
+
+    log_out() {
+      console.log(this.$router.currentRoute);
+      this.logout();
+      if (this.$router.currentRoute.path == "/Account") {
+        this.$router.push({path: '/'});
+        //this.logout();
+      }
+    },
+
   }
 }
 </script>
