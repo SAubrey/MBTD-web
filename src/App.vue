@@ -51,7 +51,6 @@ export default {
       this.logout();
       if (this.$router.currentRoute.path == "/Account") {
         this.$router.push({path: '/'});
-        //this.logout();
       }
     },
 

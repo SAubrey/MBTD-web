@@ -32,14 +32,23 @@ export default new Vuex.Store({
   mutations: {
     LOGIN(state, profile) {
       state.loggedIn = true;
-      state.userName = profile.displayName;
       state.userID = profile.uid;
-      //state.profile = profile;
 
-      // Add user to firebase
-      state.db.ref('users/' + profile.uid).set({
-        userName: state.userName,
-        uid: profile.uid
+      state.usersRef.child(state.userID).once('value', function(snapshot) {
+        var ss = snapshot.toJSON();
+
+        if (ss.userName == null) {
+          // Add user to firebase
+          state.db.ref('users/' + profile.uid).set({
+            userName: profile.displayName,
+            uid: profile.uid
+          });
+          state.userName = profile.displayName;
+
+        } else {
+          // Get preexisting username
+          state.userName = ss.userName;
+        }
       });
     },
 
@@ -61,25 +70,16 @@ export default new Vuex.Store({
 
           if (parseInt(currentScore) < score) {
             state.db.ref('scores/' + state.userID).set(score);
-              /*
-              state.scoresRef.child(state.userID).set({
-                score: score,
-              });
-            */
           }
+
         } else {
-          //state.db.ref('scores/' + state.userID).set({
-            //var s = state.userID.toString();
             state.db.ref('scores/' + state.userID).set(score);
-            //score: score,
-          //});
         }
       });
     },
 
     CREATE_LISTENERS(state) {
-      console.log("HEYYYYY");
-      state.scoresRef.orderByValue().on("value", snapshot => {
+      state.scoresRef.on("value", snapshot => {
         state.scores = snapshot.toJSON();
       });
 
@@ -91,8 +91,10 @@ export default new Vuex.Store({
     DELETE_SCORE(state, key){
     	state.scoresRef.child(key).remove();
     },
-	RENAME_USER(state, name){
-    	state.usersRef.child(state.userID).child("userName").set(name);
+
+	  RENAME_USER(state, name){
+      state.usersRef.child(state.userID).child("userName").set(name);
+      state.userName = name;
     },
   },
 
@@ -124,7 +126,7 @@ export default new Vuex.Store({
     	commit('DELETE_SCORE', key);
     },
 	
-	renameUser({commit}, name){
+	  renameUser({commit}, name){
     	commit('RENAME_USER', name);
     },
    },

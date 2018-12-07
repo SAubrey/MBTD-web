@@ -1,25 +1,31 @@
 <template>
 <v-container fluid>
-    <h2 class="centered">Account</h2>
-    <v-layout column>
-		<h3>Change username</h3>
-		<v-flex>
-            <v-text-field label="New Username" v-model="newName"></v-text-field>
-        </v-flex>
-		<v-flex>
-            <v-btn @click='rename'>Rename</v-btn>
-        </v-flex>
-        <h3>Add a run</h3>
-        <v-flex>
-            <v-text-field label="Score" v-model="score"></v-text-field>
-        </v-flex>
-        <v-flex>
-            <v-btn @click='add'>Add</v-btn>
-        </v-flex>
-
-        <v-spacer></v-spacer>       
+    <h2>Account</h2>
+    <br>
+    <v-layout row align-center justify-center>
         
+		<v-flex offset-xs1 xs2>
+            <v-layout column align-start justify-center>
+                <h3>Change username</h3>
+                <v-text-field label="New Username" v-model="newName"></v-text-field>
+                <v-btn @click='rename'>Rename</v-btn>
+            </v-layout>
+        </v-flex>
+        
+        <v-flex xs1></v-flex>
+
+        <v-flex xs2 >
+            <v-layout column align-start justify-center>
+                <h3>New highscore</h3>
+                <v-text-field label="Score" v-model="score"></v-text-field>
+                <v-btn @click='add'>Add</v-btn>
+            </v-layout>
+        </v-flex>   
+
+    </v-layout>
+    <v-layout column align-center>
         <v-flex xs4>
+            <br><br>
             <v-btn class="centered" @click="goHome"> Return</v-btn>
         </v-flex>
     </v-layout>
@@ -54,7 +60,7 @@ import { mapState, mapActions } from 'vuex';
 			rename() {
 				this.renameUser(this.newName);
 				this.newName = "";
-				console.log("YEE");
+				//console.log("YEE");
             },
             validateInput() {
                 //https://stackoverflow.com/questions/1303646/check-whether-variable-is-number-or-string-in-javascript

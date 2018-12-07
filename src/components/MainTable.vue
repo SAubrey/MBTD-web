@@ -1,17 +1,17 @@
 <template>
-<v-container fluid>
+<v-container fluid d-block>
     <h2 class="centered">High Scores</h2>
     <v-layout column>
 
-      <table id="mainTable">
+      <table class="centered">
         <tr class="header">
           <th>Rank</th><th>User</th><th>Score</th><th>Delete</th>
         </tr>
-        <template v-for="(score, key) in this.scores">
+        <template v-for="(score, key) in sort()">
         <tr class="rows">
-          <td> {{ i }} </td>
+          <td class="centeredText"> {{ indices[key] + 1 }} </td>
           <td> {{ users[key].userName }} </td>
-          <td> {{ score }} </td>
+          <td class="centeredText"> {{ score }} </td>
 	        <td><v-flex xs4>
             <v-btn v-if="userID.toString() == key.toString()" color="red" @click="deleteScore(key)">
               Delete
@@ -22,8 +22,8 @@
         </template>
       </table>
 
-        </v-layout>
-    </v-container>
+    </v-layout>
+</v-container>
 </template>
 
 <script>
@@ -32,7 +32,8 @@ import { mapActions, mapState } from 'vuex';
   name: 'mainTable',
   data: function() {
     return {
-      i: 0
+      i: 0,
+      indices: {}
     }
   },    
     computed: {
@@ -40,35 +41,43 @@ import { mapActions, mapState } from 'vuex';
     },
     methods: {
       ...mapActions(['createListeners', 'deleteScore']),    
-        order() {
-          /*
-          var arr = [];
-         // var unsArr = [];
-         //console.log()
-          for (score in this.scores) {
-            console.log(score);
-            arr.push(score.val());
+        sort() {
+          
+          // Put Obj into array
+          var ordered = [];
+          for (var score in this.scores) {
+            if (this.scores.hasOwnProperty(score)){ // JS safety net
+              ordered.push(parseInt(this.scores[score]));
+            }
           }
-
-          // Selection Sort
-          arr[0] = 0;
-          var n = this.scores.length;
+ 
+            // Selection Sort the array
+          var n = ordered.length;
           var i = 0;
             for (var i = 0; i < n - 1; i++) {
-
               var minIndex = i;
               for (var j = i + 1; j < n; j++) {
-                if (arr[j] > arr[minIndex]) {
+                if (ordered[j] > ordered[minIndex]) {
                   minIndex = j;
                 }
               }
-
-              var t = arr[minIndex];
-              arr[minIndex] = arr[i];
-              arr[i] = t;
+              var t = ordered[minIndex];
+              ordered[minIndex] = ordered[i];
+              ordered[i] = t;
           }
-          return arr;
-          */
+
+          // Put ordered array into a new object
+          // Set indices obj, which can look up the index from the uID key. 
+          var orderedObj = {};
+          for (var k = 0; k < n; k++) {
+            for (score in this.scores) {
+              if (parseInt(this.scores[score]) == ordered[k]) {
+                orderedObj[score] = ordered[k];
+                this.indices[score] = k;
+              }
+            }
+          }
+          return orderedObj;
         }
     },
 
