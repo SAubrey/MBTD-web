@@ -3,7 +3,6 @@ import './plugins/vuetify'
 import App from './App.vue'
 import store from './store'
 import VueRouter from 'vue-router'
-//import MainPage from './components/MainPage.vue'
 import Account from './components/Account.vue'
 import MainTable from './components/MainTable.vue'
 require('./assets/styles.css')
@@ -14,7 +13,6 @@ Vue.use(VueRouter)
 const appRoutes = [
   {path: '/', component: MainTable},
   {path: '/Account', component: Account},
-  //{path: '/MainTable', component: MainTable},
 ];
 
 export const appRouter = new VueRouter({

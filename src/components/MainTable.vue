@@ -12,7 +12,7 @@
           <td class="centeredText"> {{ indices[key] + 1 }} </td>
           <td> {{ users[key].userName }} </td>
           <td class="centeredText"> {{ score }} </td>
-	        <td><v-flex xs4>
+          <td><v-flex xs4>
             <v-btn v-if="userID.toString() == key.toString()" color="red" @click="deleteScore(key)">
               Delete
             </v-btn>
@@ -53,7 +53,7 @@ import { mapActions, mapState } from 'vuex';
  
             // Selection Sort the array
           var n = ordered.length;
-          var i = 0;
+          
             for (var i = 0; i < n - 1; i++) {
               var minIndex = i;
               for (var j = i + 1; j < n; j++) {
