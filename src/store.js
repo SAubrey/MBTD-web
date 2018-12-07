@@ -34,16 +34,19 @@ export default new Vuex.Store({
       state.loggedIn = true;
       state.userID = profile.uid;
 
-      state.usersRef.child(state.userID).once('value', function(snapshot) {
-        var ss = snapshot.toJSON();
+      state.usersRef.once('value', function(snapshot) {
+        var ss = snapshot.toJSON()[state.userID];
 
-        if (ss.userName == null) {
+        if (ss == null) {
           // Add user to firebase
           state.db.ref('users/' + profile.uid).set({
             userName: profile.displayName,
-            uid: profile.uid
+            //uid: profile.uid
           });
+          console.log(state);
           state.userName = profile.displayName;
+          console.log(profile.displayName);
+          console.log(state.userName);
 
         } else {
           // Get preexisting username
@@ -60,10 +63,8 @@ export default new Vuex.Store({
 
     INSERT_SCORE(state, score) {
       var currentScore = 0;
-      //console.log(state.scoresRef.child(state.userID).);
       state.scoresRef.child(state.userID).once('value', function(snapshot) {
         
-          console.log(snapshot.val());
         // If a score already exists:
         if (snapshot.val() != null) {
           currentScore = snapshot.val();
@@ -105,7 +106,7 @@ export default new Vuex.Store({
         const result = await firebase.auth().signInWithPopup(provider);
         commit('LOGIN', result.user);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     },
 
@@ -138,5 +139,4 @@ export default new Vuex.Store({
     scores: state => state.scores,
     users: state => state.users,
   }),
-
 })

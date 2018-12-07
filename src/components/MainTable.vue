@@ -32,7 +32,6 @@ import { mapActions, mapState } from 'vuex';
   name: 'mainTable',
   data: function() {
     return {
-      i: 0,
       indices: {}
     }
   },    
