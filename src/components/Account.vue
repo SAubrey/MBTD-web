@@ -63,9 +63,7 @@ import { mapState, mapActions } from 'vuex';
 				//console.log("YEE");
             },
             validateInput() {
-                //https://stackoverflow.com/questions/1303646/check-whether-variable-is-number-or-string-in-javascript
-                
-                if (this.score % 1 != 0 || (this.score < 1 || this.score > 10000) || !(/^-?[\d.]+(?:e-?\d+)?$/.test(this.score))) {
+                if (this.score % 1 != 0 || (this.score < 1 || this.score > 10000) || isNaN(this.score)) {
                     alert("Oops! Score must be a whole number between 1 - 10,000");
                     return false;
                 } else {
