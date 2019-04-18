@@ -1,4 +1,7 @@
-# mtd-web
+# MicroBio Tower Defense highscores website
+This website serves as a prototype and is not integrated with the game Microbio TD.
+
+### View the website [here](https://microbiotd.netlify.com/#/)  
 
 ## Project setup
 ```
